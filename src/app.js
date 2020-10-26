@@ -32,19 +32,16 @@ app.put("/repositories/:id", (req, res) => {
   const {id} =  req.params;
   const {title,url,techs} = req.body;
   const repositorieIndex = repositories.findIndex(repositorie=>repositorie.id==id);
-  const likeCounter = repositories[repositorieIndex].likes;
-  if(repositorieIndex<0){
+
+  if(repositorieIndex < 0){
     res.status(400).json({error:"Respositorie not found"});
   }
-  const respositorie = {
-    id,
-    title,
-    url,
-    techs,
-    like:likeCounter,
-  }
-  repositories[repositorieIndex] = respositorie;
-  return res.status(201).json(respositorie);
+
+  repositories[repositorieIndex].title = title;
+  repositories[repositorieIndex].url = url;
+  repositories[repositorieIndex].techs = techs;
+
+  return res.status(201).json(repositories[repositorieIndex]);
 });
 
 app.delete("/repositories/:id", (req, res) => {
